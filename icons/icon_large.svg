@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- 背景 - 填满整个空间的圆形 -->
+  <circle cx="256" cy="256" r="240" fill="#4285f4"/>
+  
+  <!-- 复制图标 - 大而清晰 -->
+  <g transform="translate(128, 128) scale(1.2)">
+    <!-- 前面的文档 -->
+    <rect x="30" y="30" width="160" height="200" rx="10" fill="white" stroke="#2a75f3" stroke-width="8"/>
+    
+    <!-- 后面的文档 -->
+    <rect x="70" y="70" width="160" height="200" rx="10" fill="white" stroke="#2a75f3" stroke-width="8"/>
+    
+    <!-- 装饰线条 -->
+    <line x1="60" y1="90" x2="160" y2="90" stroke="#2a75f3" stroke-width="8" stroke-linecap="round"/>
+    <line x1="60" y1="120" x2="160" y2="120" stroke="#2a75f3" stroke-width="8" stroke-linecap="round"/>
+    <line x1="60" y1="150" x2="130" y2="150" stroke="#2a75f3" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>

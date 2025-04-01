@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Base icon (same as original but with green tint) -->
+  <rect width="16" height="16" rx="3" fill="#4CAF50"/>
+  <!-- Checkmark -->
+  <path d="M3 8 L7 12 L13 5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

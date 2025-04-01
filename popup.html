@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyCopy</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 300px;
+      margin: 0;
+      padding: 0;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+    }
+    
+    .header {
+      background-color: #1e1e1e;
+      padding: 10px 15px;
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px solid #3c3c3c;
+    }
+    
+    .section {
+      padding: 10px 0;
+    }
+    
+    .section-title {
+      padding: 5px 15px;
+      font-size: 12px;
+      color: #999;
+      text-transform: uppercase;
+    }
+    
+    .menu-item {
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .menu-item:hover {
+      background-color: #3e3e3e;
+    }
+    
+    .menu-item.active {
+      background-color: #0078d7;
+    }
+    
+    .divider {
+      height: 1px;
+      background-color: #3c3c3c;
+      margin: 5px 0;
+    }
+    
+    .format-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      padding: 5px 10px;
+    }
+    
+    .format-item {
+      padding: 8px;
+      text-align: center;
+      background-color: #3c3c3c;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .format-item:hover {
+      background-color: #4c4c4c;
+    }
+    
+    .footer {
+      padding: 10px 15px;
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+      border-top: 1px solid #3c3c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">EasyCopy</div>
+  
+  <div class="section">
+    <div class="section-title">复制范围</div>
+    <div class="menu-item" id="this_tab">This tab</div>
+    <div class="menu-item" id="window_tabs">This window's tabs</div>
+    <div class="menu-item" id="all_tabs">All tabs</div>
+    <div class="menu-item" id="all_tabs_by_window">All tabs by window</div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="section">
+    <div class="section-title">复制格式</div>
+    <div class="format-grid">
+      <div class="format-item" id="url">URL</div>
+      <div class="format-item" id="title_url">Title: URL</div>
+      <div class="format-item" id="title_and_url">Title & URL</div>
+      <div class="format-item" id="title">Title</div>
+      <div class="format-item" id="markdown">Markdown</div>
+      <div class="format-item" id="bbcode">BBCode</div>
+      <div class="format-item" id="csv">CSV</div>
+      <div class="format-item" id="json">JSON</div>
+      <div class="format-item" id="html">HTML</div>
+      <div class="format-item" id="html_table">HTML table</div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    单击图标：复制标题和URL | 双击图标：复制可读内容
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

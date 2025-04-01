@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyCopy 高级复制</title>
+  <style>
+    :root {
+      --primary-color: #03a87c; /* Medium 风格的绿色 */
+      --primary-hover: #028b66;
+      --active-color: #04c38d;
+      --text-color: #292929; /* Medium 风格的深色文本 */
+      --light-text: #757575;
+      --bg-color: #ffffff; /* 纯白背景 */
+      --card-bg: #ffffff;
+      --border-color: #f0f0f0; /* 更轻的边框 */
+      --shadow: 0 2px 10px rgba(0,0,0,0.05);
+      --transition: all 0.2s ease;
+      --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      width: 320px;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .container {
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .header {
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .scope-section {
+      background-color: var(--card-bg);
+    }
+
+    .segmented-control {
+      display: flex;
+      margin: 15px 20px;
+      border: 1px solid var(--primary-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .segment {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+    
+    .segment:hover:not(.active) {
+      background-color: rgba(3, 168, 124, 0.05);
+    }
+    
+    .segment.active {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 500;
+    }
+
+    .copy-as-section {
+      background-color: var(--card-bg);
+    }
+
+    .copy-as-header {
+      padding: 12px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    .copy-as-header .arrow {
+      transition: transform 0.2s ease;
+      font-size: 12px;
+      color: var(--light-text);
+    }
+
+    .copy-as-header.expanded .arrow {
+      transform: rotate(180deg);
+    }
+
+    .format-options {
+      display: flex;
+      padding: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .format-option {
+      flex: 1 0 calc(33.333% - 10px);
+      min-width: 80px;
+      padding: 8px 4px;
+      text-align: center;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 13px;
+      border: 1px solid var(--border-color);
+    }
+
+    .format-option:hover {
+      background-color: rgba(3, 168, 124, 0.1);
+      border-color: rgba(3, 168, 124, 0.3);
+    }
+
+    .format-option.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .footer {
+      padding: 12px 20px;
+      background-color: var(--card-bg);
+      font-size: 12px;
+      color: var(--light-text);
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .status {
+      padding: 10px 20px;
+      background-color: #e6f7f2; /* 浅绿色背景 */
+      color: var(--primary-color);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status.visible {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scope-section">
+      <div class="segmented-control">
+        <div class="segment active" data-scope="this_tab">当前标签</div>
+        <div class="segment" data-scope="all_tabs">所有标签</div>
+      </div>
+    </div>
+    
+    <div class="copy-as-section">
+      <div class="copy-as-header expanded">
+        <span>复制标题为</span>
+        <span class="arrow">⬇️</span>
+      </div>
+      
+      <div class="format-options">
+        <div class="format-option" data-format="title_url">Title: URL</div>
+        <div class="format-option" data-format="markdown">Markdown</div>
+        <div class="format-option" data-format="url">URL</div>
+        <div class="format-option" data-format="title">Title</div>
+        <div class="format-option" data-format="html">HTML</div>
+       
+       
+        <div class="format-option" data-format="csv">CSV</div>
+        <div class="format-option" data-format="json">JSON</div>
+        <div class="format-option" data-format="html_table">HTML表格</div>
+        <div class="format-option" data-format="bbcode">BBCode</div>
+      </div>
+    </div>
+    
+    <div class="status" id="status">已复制到剪贴板！</div>
+    
+    <div class="footer">
+      单击：复制标题和URL | 双击：复制可读内容 | 三击：打开高级复制
+    </div>
+  </div>
+
+  <script src="advanced-popup.js"></script>
+</body>
+</html>
