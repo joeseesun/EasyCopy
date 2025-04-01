@@ -5,6 +5,12 @@
   "description": "Quickly copy the current page title and URL with a single click",
   "permissions": ["tabs", "clipboardWrite", "scripting", "contextMenus", "windows", "storage"],
   "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["Readability.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },

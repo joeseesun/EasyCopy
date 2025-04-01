@@ -7,9 +7,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   // 获取DOM元素
   const scopeOptions = document.querySelectorAll('.segment');
-  const formatOptions = document.querySelectorAll('.format-option');
-  const copyAsHeader = document.querySelector('.copy-as-header');
-  const formatOptionsContainer = document.querySelector('.format-options');
+  const formatOptions = document.querySelectorAll('.format-option:not(.content-option)');
+  const contentOptions = document.querySelectorAll('.content-option');
+  const copyAsHeaders = document.querySelectorAll('.copy-as-header');
+  const formatOptionsContainers = document.querySelectorAll('.format-options');
   const statusElement = document.getElementById('status');
   
   // 当前选择的范围和格式
@@ -17,15 +18,24 @@ document.addEventListener('DOMContentLoaded', function() {
   let selectedFormat = null; // 默认不选中任何格式
   
   // 初始化 - 默认展开格式选项
-  copyAsHeader.classList.add('expanded');
+  copyAsHeaders.forEach(header => {
+    header.classList.add('expanded');
+  });
   
   // 初始化时确保格式选项容器是可见的
-  formatOptionsContainer.style.display = 'flex';
+  formatOptionsContainers.forEach(container => {
+    container.style.display = 'flex';
+  });
   
   // 切换格式选项的显示/隐藏
-  copyAsHeader.addEventListener('click', function() {
-    this.classList.toggle('expanded');
-    formatOptionsContainer.style.display = this.classList.contains('expanded') ? 'flex' : 'none';
+  copyAsHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      this.classList.toggle('expanded');
+      const nextContainer = this.nextElementSibling;
+      if (nextContainer && nextContainer.classList.contains('format-options')) {
+        nextContainer.style.display = this.classList.contains('expanded') ? 'flex' : 'none';
+      }
+    });
   });
   
   // 处理范围选择
@@ -48,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // 处理格式选择
+  // 处理标题格式选择
   formatOptions.forEach(option => {
     option.addEventListener('click', function() {
       // 移除其他选项的活动状态
@@ -58,12 +68,26 @@ document.addEventListener('DOMContentLoaded', function() {
       // 更新选择的格式
       selectedFormat = this.dataset.format;
       // 执行复制操作
-      copyWithCurrentSelection();
+      copyWithCurrentSelection('title');
+    });
+  });
+  
+  // 处理内容格式选择
+  contentOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      // 移除其他选项的活动状态
+      contentOptions.forEach(opt => opt.classList.remove('active'));
+      // 添加当前选项的活动状态
+      this.classList.add('active');
+      // 更新选择的格式
+      selectedFormat = this.dataset.format;
+      // 执行复制操作
+      copyWithCurrentSelection('content');
     });
   });
   
   // 使用当前选择执行复制操作
-  function copyWithCurrentSelection() {
+  function copyWithCurrentSelection(type = 'title') {
     console.log('Executing copy with current selection');
     
     // 显示正在复制的状态
@@ -105,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       // 发送消息到background.js准备数据
       chrome.runtime.sendMessage({
-        action: 'copyTabs',
+        action: type === 'content' ? 'copyContent' : 'copyTabs',
         scope: scope,
         format: format
       }, async response => {

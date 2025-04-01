@@ -112,6 +112,16 @@
       gap: 10px;
       border-bottom: 1px solid var(--border-color);
     }
+    
+    /* 内容选项的特殊样式 */
+    .content-options {
+      background-color: rgba(3, 168, 124, 0.03);
+    }
+    
+    .content-option {
+      flex: 1 0 calc(50% - 10px);
+      font-weight: 500;
+    }
 
     .format-option {
       flex: 1 0 calc(33.333% - 10px);
@@ -154,6 +164,14 @@
       font-size: 14px;
       font-weight: 500;
       display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      max-width: 90%;
     }
 
     .status.visible {
@@ -194,6 +212,19 @@
         <div class="format-option" data-format="json">JSON</div>
         <div class="format-option" data-format="html_table">HTML表格</div>
         <div class="format-option" data-format="bbcode">BBCode</div>
+      </div>
+    </div>
+    
+    <!-- 新增的复制内容模块 -->
+    <div class="copy-as-section">
+      <div class="copy-as-header expanded">
+        <span>复制内容为</span>
+        <span class="arrow">⬇️</span>
+      </div>
+      
+      <div class="format-options content-options">
+        <div class="format-option content-option" data-format="readable_content">可读内容</div>
+        <div class="format-option content-option" data-format="full_html">完整HTML</div>
       </div>
     </div>
     
